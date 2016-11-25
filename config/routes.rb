@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  resources :users, only: [:index, :show]
+
   authenticated :user do
     root to: 'home#index', as: 'home'
   end
