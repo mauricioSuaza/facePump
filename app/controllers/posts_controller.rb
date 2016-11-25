@@ -67,6 +67,8 @@ class PostsController < ApplicationController
     redirect_to :back
   end
 
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
@@ -75,6 +77,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:attachment, :content, :user_id)
+      params.require(:post).permit(:comment, :attachment, :content, :user_id)
     end
 end

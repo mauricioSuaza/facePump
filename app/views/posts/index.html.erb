@@ -34,6 +34,23 @@
          <% end %>
        </td>
 
+       <td>
+         <div class="comment-section">
+           <%= form_tag create_comment_path, method: "post" do %>
+           <%= hidden_field_tag "id", post.id %>
+           <%= text_area_tag :comment %>
+           <%= submit_tag "Submit" %>
+           <% end %>
+           <div class="comment_list">
+            <% @comments = post.comments.all %>
+            <% @comments.each do |comment| %>
+            <%= comment.comment %> <br>
+            <%= comment.user.name %> <br>
+            <% end %>
+          </div>
+         </div>
+       </td>
+
 
       </tr>
     <% end %>

@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
 
-
-
-
-
   devise_for :users
 
   authenticated :user do
@@ -21,5 +17,6 @@ Rails.application.routes.draw do
     end
   end
 
+  post 'comments' => 'comments#create', as: "create_comment"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
