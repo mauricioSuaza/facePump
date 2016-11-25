@@ -35,6 +35,14 @@ gem 'bootstrap-sass', '~> 3.3.6'
 
 gem 'carrierwave'
 
+gem 'acts_as_votable', '~> 0.10.0'
+
+gem 'acts_as_commentable'
+
+gem "font-awesome-rails"
+
+gem 'has_friendship'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

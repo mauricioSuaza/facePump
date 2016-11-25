@@ -10,14 +10,7 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-@import "bootstrap-sprockets";
-@import "bootstrap";
-@import "font-awesome";
-@import "jquery.datetimepicker";
-@import "*";
+//= require bootstrap
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
-//= require bindWithDelay
-//= require jquery.datetimepicker
 //= require_tree .
