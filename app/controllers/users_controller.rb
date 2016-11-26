@@ -14,6 +14,8 @@ class UsersController < ApplicationController
             @added = true
         end
     end
+    
+    @post = Post.new
   end
 
   # GET /posts/1/edit
