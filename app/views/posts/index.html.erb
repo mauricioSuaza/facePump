@@ -49,18 +49,19 @@
             </div>
 
             <div class="panel-footer">
-                <span class="label ">
+                <span class="">
 
-                  <%= button_to "Like", like_post_path(post) %>
+                  <%= button_to "Like", like_post_path(post), class: 'btn btn-primary' %>
                     <%= fa_icon 'thumbs-up' %>
                   <%= post.get_upvotes.size %>
 
                 </span>
-                <span class="label ">
-                  <%= link_to dislike_post_path(post), method: :put do %>
+                <span class=" ">
+
+                  <%= button_to "DisLike", dislike_post_path(post), class: 'btn btn-primary' %>
                     <%= fa_icon 'thumbs-down' %>
                    <%= post.get_downvotes.size %>
-                  <% end %>
+
                 </span>
                  <span class="label ">
                    <% if post.user == current_user %>
