@@ -1,18 +1,28 @@
-<ul>
 
-  <% @users.each do |user| %>
-  <% if user!= current_user %>
+<div class="row">
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading c-list">
+                    <span class="title">Pumps</span>
+                </div>
+                <ul class="list-group" id="contact-list">
+                  <% @users.each do |user| %>
+                  <% if user!= current_user %>
 
-    <li>
-      <% if user.avatar.url.present? %>
-      <%= image_tag(user.avatar.url, height: '64', width: '64') %>
-      <%end%>
-    </li>
-
-    <li> <a href="<%=user_path(user)%>"><%= user.name %></a></li>
-
-  <%end%>
-
-
-  <% end %>
-</ul>
+                    <li class="list-group-item">
+                        <div class="col-xs-12 col-sm-3">
+                          <% if user.avatar.url.present? %>
+                            <img src="<%= user.avatar.url %>" alt="Scott Stevens" class="img-responsive img-circle" />
+                          <%end%>
+                        </div>
+                        <div class="col-xs-12 col-sm-9">
+                            <span class="name"><a href="<%=user_path(user)%>"><%= user.name %></a></span><br/>
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>
+                    <%end%>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+	</div>

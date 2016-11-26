@@ -7,6 +7,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @friends = @user.friends
     @added = false
+    @alreadyFriends = false
     @friendRequests = current_user.requested_friends
     @pendings = current_user.pending_friends
     @pendings.each do |pend|
@@ -14,7 +15,13 @@ class UsersController < ApplicationController
             @added = true
         end
     end
-    
+    @friends.each do |friend|
+        if current_user== friend
+            @alreadyFriends = true
+        end
+    end
+
+
     @post = Post.new
   end
 

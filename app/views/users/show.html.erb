@@ -35,7 +35,7 @@ Licensed under MIT
 				<!-- SIDEBAR BUTTONS -->
 				<div class="profile-userbuttons">
 					<button type="button" class="btn btn-success btn-sm">
-            <% if @added == false &&  @user!= current_user%>
+            <%if @added == false &&  @user!= current_user  &&  @alreadyFriends == false %>
               <%= link_to 'Add friend', add_user_path(@user), method: :put %>
             <%end%>
             <% if @added == true %>
@@ -43,6 +43,9 @@ Licensed under MIT
             <%end%>
             <% if @user == current_user %>
               <span>Hello me </span>
+            <%end%>
+            <% if  @alreadyFriends %>
+              <span>Already friend </span>
             <%end%>
           </button>
 
@@ -86,7 +89,7 @@ Licensed under MIT
                     <% if friend.avatar.url.present? %>
                       <%= image_tag(friend.avatar.url, height: '34', width: '34') %>
                     <%end%>
-                    <%=friend.name%>
+                    <a href="<%=user_path(friend)%>"><%= friend.name %></a>
                   </li>
                 <%end%>
               </ul>
@@ -118,7 +121,7 @@ Licensed under MIT
                 <%= f.submit :post, class: 'btn btn-primary'%>
               <% end %>
               <% end %>
-          
+
                 <% @posts=@user.posts %>
 
                 <h2>Posts lists</h2>
@@ -235,14 +238,8 @@ Licensed under MIT
                    </div>
                 </div>
 
-
               <%end%>
               </div>
-
-
-
-
-
 
             </div>
 		</div>
