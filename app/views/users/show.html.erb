@@ -125,7 +125,7 @@ Licensed under MIT
                 <% @posts=@user.posts %>
 
                 <h2>Posts lists</h2>
-                <% @posts.each do |post| %>
+                <% @posts.reverse_each do |post| %>
                 <div id="postlist">
                     <div class="panel">
                             <div class="panel-heading">
