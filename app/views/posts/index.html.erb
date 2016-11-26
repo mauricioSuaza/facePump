@@ -1,62 +1,138 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Posts</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Attachment</th>
-      <th>Content</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.attachment %></td>
-        <td><%= post.content %></td>
-        <td><%= post.user %></td>
-        <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td>
-          <%= link_to like_post_path(post), method: :put do %>
-            <%= fa_icon 'thumbs-up' %>
-          <%= post.get_upvotes.size %>
-          <% end %>
-       </td>
-       <td>
-         <%= link_to dislike_post_path(post), method: :put do %>
-           <%= fa_icon 'thumbs-down' %>
-          <%= post.get_downvotes.size %>
-         <% end %>
-       </td>
-
-       <td>
-         <div class="comment-section">
-           <%= form_tag create_comment_path, method: "post" do %>
-           <%= hidden_field_tag "id", post.id %>
-           <%= text_area_tag :comment %>
-           <%= submit_tag "Submit" %>
-           <% end %>
-           <div class="comment_list">
-            <% @comments = post.comments.all %>
-            <% @comments.each do |comment| %>
-            <%= comment.comment %> <br>
-            <%= comment.user.name %> <br>
-            <% end %>
-          </div>
-         </div>
-       </td>
-
-
-      </tr>
+<div class="container">
+ <div class="row">
+	<div class="col-lg-6 offset-lg-4 col-md-6 offset-md-4">
+    <div class="row">
+    </div>
+    <h1>Newsfeed</h1>
+    <%= form_for(@post) do |f| %>
+      <div class="form-group">
+       <h2>Create post</h2>
+          <%= f.text_area :content, class: 'form-control', autofocus: true,
+              placeholder: 'What\'s up?' %>
+          <label for=":attachment">Upload image</label>
+          <%= f.file_field :attachment, class: 'form-control' %>
+      </div>
+      <%= f.submit :post, class: 'btn btn-primary'%>
     <% end %>
-  </tbody>
-</table>
+    <h2>Posts lists</h2>
+    <% @posts.each do |post| %>
+		<div id="postlist">
+        <div class="panel">
+                <div class="panel-heading">
+                    <div class="text-center">
+                        <div class="row">
+                          <div class="col-sm-3">
+                              <h4 class="pull-left">
+                              <small>
+                                <% if post.user.avatar.url.present? %>
+                                <%= image_tag(post.user.avatar.url, height: '64', width: '64') %>
+                                <%end%>
+                              </small>
+                              </h4>
+                          </div>
+                          <div class="col-sm-9">
+                                <h3 class="pull-left"><%= post.user.name %></h3>
+                          </div>
+                        </div>
+                    </div>
+                </div>
 
-<br>
+            <div class="panel-body">
+                <a href="#" class="thumbnail">
+                    <% if post.attachment.url.present? %>
+                    <%= image_tag(post.attachment.url) %>
+                    <%end%>
+                </a>
+                  <%=post.content %>
+            </div>
 
-<%= link_to 'New Post', new_post_path %>
+            <div class="panel-footer">
+                <span class="label ">
+                  <%= link_to like_post_path(post), method: :put do %>
+                    <%= fa_icon 'thumbs-up' %>
+                  <%= post.get_upvotes.size %>
+                  <% end %>
+                </span>
+                <span class="label ">
+                  <%= link_to dislike_post_path(post), method: :put do %>
+                    <%= fa_icon 'thumbs-down' %>
+                   <%= post.get_downvotes.size %>
+                  <% end %>
+                </span>
+                 <span class="label ">
+                   <% if post.user == current_user %>
+                   <%= link_to 'Edit', edit_post_path(post) %></td>
+                   <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                   <% end %>
+                 </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment-section">
+
+      <div class="container">
+        <div class="row">
+        <div class="col-sm-12">
+        <h3>Comments</h3>
+        </div><!-- /col-sm-12 -->
+        </div><!-- /row -->
+
+       <% @comments = post.comments.all %>
+       <% @comments.each do |comment| %>
+         <div class="row">
+         <div class="col-sm-1">
+         <div class="thumbnail">
+
+         <% if comment.user.avatar.url.present? %>
+           <%= image_tag(comment.user.avatar.url, height: '64', width: '64') %>
+         <%end%>
+         </div><!-- /thumbnail -->
+         </div><!-- /col-sm-1 -->
+
+         <div class="col-sm-5">
+         <div class="panel panel-default">
+         <div class="panel-heading">
+         <strong><%=comment.user.name%></strong> <span class="text-muted"><%=comment.created_at%></span>
+         </div>
+         <div class="panel-body">
+         <%= comment.comment %> <br>
+         </div><!-- /panel-body -->
+         </div><!-- /panel panel-default -->
+         </div><!-- /col-sm-5 -->
+         </div><!-- /row -->
+
+
+       <% end %>
+    </div>
+    <div class="comment box">
+
+      <div class="container">
+        <div class="row">
+          <h3>Add Comment</h3>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+               <div class="widget-area no-padding blank">
+               <div class="status-upload">
+                 <%= form_tag create_comment_path, method: "post" do %>
+                 <%= hidden_field_tag "id", post.id %>
+                 <%= text_area_tag :comment %>
+                 <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> comment</button>
+                 <% end %>
+               </div><!-- Status Upload  -->
+             </div><!-- Widget Area -->
+           </div>
+         </div>
+       </div>
+    </div>
+
+
+<%end%>
+</div>
+
+</div>
+</div>

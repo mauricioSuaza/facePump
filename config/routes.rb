@@ -4,12 +4,14 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show]
 
-  authenticated :user do
-    root to: 'home#index', as: 'home'
-  end
+  devise_scope :user do
+    authenticated :user do
+      root to: 'posts#index'
+    end
 
-  unauthenticated :user do
-    root 'home#front'
+    unauthenticated :user do
+      root 'devise/sessions#new'
+    end
   end
 
   resources :posts do
@@ -19,6 +21,15 @@ Rails.application.routes.draw do
     end
   end
 
+
   post 'comments' => 'comments#create', as: "create_comment"
+
+  resources :users do
+    member do
+      put "add", to: "friendship#add", as: "add"
+      put "accept", to: "friendship#accept", as: "accept"
+      put "decline", to: "friendship#decline", as: "decline"
+    end
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -1,0 +1,90 @@
+<p id="notice"><%= notice %></p>
+
+<h1>  <strong><%= @user.name %></strong></h1>
+
+
+<p>
+  <% if @user.avatar.url.present? %>
+    <%= image_tag(@user.avatar.url, height: '64', width: '64') %>
+  <%end%>
+</p>
+
+<% if  @user == current_user%>
+<div class="Pending">
+  <h3>  <span>Friend Requests for me</span></h3>
+
+  <ul>
+    <% @friendRequests.each do |friend| %>
+      <li><%=friend.name%>
+      <%= link_to 'Accept', accept_user_path(friend), method: :put %>
+      <%= link_to 'Decline', decline_user_path(friend), method: :put %>
+      </li>
+    <%end%>
+  </ul>
+</div>
+
+
+<div class="Pending">
+  <h3><span>Unanswered friends requests i sent</span></h3>
+
+  <ul>
+    <%@pendings.each do |pend| %>
+      <li><%=pend.name %></li>
+    <%end%>
+  </ul>
+</div>
+<%end%>
+
+<h3>Friends</h3>
+<div class="friends">
+  <ul>
+    <% @friends.each do |friend| %>
+      <li>
+        <%=friend.name%>
+        <% if friend.avatar.url.present? %>
+          <%= image_tag(friend.avatar.url, height: '34', width: '34') %>
+        <%end%>
+      </li>
+    <%end%>
+  </ul>
+
+</div>
+
+
+<% if @added == false &&  @user!= current_user%>
+  <%= link_to 'Add friend', add_user_path(@user), method: :put %>
+<%end%>
+
+<% if @added == true %>
+  <span>Friend Request sent</span>
+<%end%>
+
+<h3>Posts</h3>
+<ul>
+  <% @posts=@user.posts %>
+  <% @posts.each do |post| %>
+
+  <li>
+    <% if post.attachment.url.present? %>
+    <%= image_tag(post.attachment.url, height: '64', width: '64') %>
+    <%end%>
+  </li>
+  <li>  <%= post.content %></li>
+
+  <div class="comment_list">
+   <% @comments = post.comments.all %>
+   <% @comments.each do |comment| %>
+   <%= comment.comment %> <br>
+   <%= comment.user.name %> <br>
+   <% end %>
+  </div>
+
+  <% end %>
+  <ul>
+
+  </ul>
+</ul>
+
+
+
+<%= link_to 'Back', users_path %>

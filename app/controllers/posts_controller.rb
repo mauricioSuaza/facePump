@@ -4,7 +4,22 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @friends = current_user.friends
+
+    @post = Post.new
+    
+    @posts = Array.new
+
+    current_user.posts.each do |post|
+       @posts<<post
+    end
+
+    @friends.each do |friend|
+        friend.posts.each do |post|
+            @posts<<post
+        end
+    end
+
   end
 
   # GET /posts/1
@@ -19,6 +34,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+
   end
 
   # POST /posts

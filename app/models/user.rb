@@ -5,5 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_friendship
-  
+
+  mount_uploader :avatar, AvatarUploader
+
+  has_many :posts
+
 end

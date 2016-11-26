@@ -3,15 +3,17 @@ class FriendshipController < ApplicationController
   def add
 
     @user = User.find(params[:id])
-    current_user.request_friend(@user)
 
+    current_user.friend_request(@user)
+
+    redirect_to :back
   end
 
   def accept
 
     @user = User.find(params[:id])
-    #@user.request_friend(current_user)
     current_user.accept_request(@user)
+    redirect_to :back
 
   end
 
@@ -19,6 +21,7 @@ class FriendshipController < ApplicationController
 
     @user = User.find(params[:id])
     current_user.decline_request(@user)
+    redirect_to :back
 
   end
 
