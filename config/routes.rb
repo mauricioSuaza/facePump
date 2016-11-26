@@ -16,8 +16,8 @@ Rails.application.routes.draw do
 
   resources :posts do
     member do
-      patch "like", to: "posts#upvote"
-      patch "dislike", to: "posts#downvote"
+      put "like", to: "posts#upvote", as: "like"
+      put "dislike", to: "posts#downvote", as: "dislike"
     end
   end
 

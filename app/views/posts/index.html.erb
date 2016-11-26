@@ -50,10 +50,11 @@
 
             <div class="panel-footer">
                 <span class="label ">
-                  <%= link_to like_post_path(post), method: :put do %>
+
+                  <%= button_to "Like", like_post_path(post) %>
                     <%= fa_icon 'thumbs-up' %>
                   <%= post.get_upvotes.size %>
-                  <% end %>
+
                 </span>
                 <span class="label ">
                   <%= link_to dislike_post_path(post), method: :put do %>
